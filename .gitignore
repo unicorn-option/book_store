@@ -160,6 +160,12 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 .idea/
 
+# Fleet
+.fleet
+
+# VSCode
+.vscode
+
 # Tortoise-ORM aerich migration file
 migrations/
 
