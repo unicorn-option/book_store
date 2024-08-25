@@ -59,6 +59,15 @@ class Settings:
         }
     }
 
+    REDIS_CONFIG = {
+        'db_name': 'book_store',
+        'address': (os.environ.get('REDIS_HOST', 'localhost'), os.environ.get('REDIS_PORT', 6379)),
+        'db': os.environ.get('REDIS_DB', 0),
+        'password': os.environ.get('REDIS_PASSWORD', 'unicorn'),
+        'minsize': 1,
+        'maxsize': 10,
+    }
+
     CORS = {
         "allow_origins": ['*'],             # 设置允许的 origins 来源
         "allow_credentials": True,
@@ -134,6 +143,15 @@ class DevSettings(Settings):
         }
     }
 
+    REDIS_CONFIG = {
+        'db_name': 'book_store',
+        'address': ('localhost', 6379),
+        'db': 0,
+        'password': 'unicorn',
+        'minsize': 1,
+        'maxsize': 10,
+    }
+
     # 保存文件路径配置
     BASE_PATH = '/Users/ming/book_store'
 
@@ -152,7 +170,7 @@ else:
 TORTOISE_ORM = settings.TORTOISE_ORM
 
 
-async def init():
+async def init_db():
     try:
         await Tortoise.init(config=settings.TORTOISE_ORM)
         await Tortoise.generate_schemas()

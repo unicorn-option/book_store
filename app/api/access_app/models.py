@@ -24,6 +24,7 @@ class UserGroups(Model):
 class Permissions(Model):
     id = fields.IntField(pk=True)
     name = fields.CharField(max_length=32, null=False, description='权限名称')
+    api_path = fields.CharField(max_length=32, null=False, description='API 路径')
     create_at = fields.DatetimeField(auto_now_add=True, description='创建时间')
     update_at = fields.DatetimeField(auto_now=True, description='更新时间')
     is_active = fields.BooleanField(default=False, description='是否已激活')
