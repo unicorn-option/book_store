@@ -3,8 +3,8 @@ from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.requests import Request
 from starlette.responses import JSONResponse
 
-from app.core.config import settings
-from app.utils.auth import USER_MODEL
+from src.app.core.config import settings
+from src.app.utils.auth import USER_MODEL
 
 
 class JWTMiddleware(BaseHTTPMiddleware):

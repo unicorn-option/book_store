@@ -1,4 +1,3 @@
-import traceback
 from datetime import datetime, timedelta
 
 from fastapi import APIRouter
@@ -7,13 +6,12 @@ from starlette.exceptions import HTTPException
 from tortoise.exceptions import IntegrityError
 from tortoise.transactions import in_transaction
 
-from app.api.admin_app.data_pydantic import AdministratorItem, EmployeesItem
-from app.api.admin_app.models import Administrator
-from app.api.employee_app.models import Employees
-from app.core.config import settings
-from app.utils.auth import create_access_token
-from app.utils.rsa_tools import create_rsa_private_public_key, get_public_key
-from app.utils.totp_tools import generate_secret_key
+from src.app.api.admin_app.data_pydantic import AdministratorItem, EmployeesItem
+from src.app.api.admin_app.models import Administrator
+from src.app.api.employee_app.models import Employees
+from src.app.core.config import settings
+from src.app.utils.auth import create_access_token
+from src.app.utils.totp_tools import generate_secret_key
 
 admin_routers = APIRouter()
 

@@ -4,12 +4,11 @@ from fastapi import APIRouter
 from starlette import status
 from starlette.exceptions import HTTPException
 
-from app.api.employee_app.data_pydantic import EmployeeItem
-from app.api.employee_app.models import Employees
-from app.core.config import settings
-from app.utils.auth import create_access_token
-from app.utils.rsa_tools import decryption_message
-from app.utils.totp_tools import create_totp_token
+from src.app.api.employee_app.data_pydantic import EmployeeItem
+from src.app.api.employee_app.models import Employees
+from src.app.core.config import settings
+from src.app.utils.auth import create_access_token
+from src.app.utils.totp_tools import create_totp_token
 
 employee_routers = APIRouter()
 

@@ -1,7 +1,7 @@
-from tortoise import fields, Model
+from tortoise import fields
 
-from app.api.access_app.models import ReaderGroups
-from app.models import Users
+from src.app.api.access_app.models import ReaderGroups
+from src.app.models import Users
 
 
 class Readers(Users):

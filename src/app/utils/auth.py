@@ -2,10 +2,10 @@ from datetime import datetime, timedelta
 
 import jwt
 
-from app.api.admin_app.models import Administrator
-from app.api.employee_app.models import Employees
-from app.api.reader_app.models import Readers
-from app.core.config import settings
+from src.app.api.admin_app.models import Administrator
+from src.app.api.employee_app.models import Employees
+from src.app.api.reader_app.models import Readers
+from src.app.core.config import settings
 
 USER_MODEL = {
     'reader': Readers,

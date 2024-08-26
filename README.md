@@ -25,7 +25,7 @@ $ git branch -M main
 $ git push -u origin main
 ```
 
-![](./src/init_git_repository_and_clone_github.png)
+![](docs/images/init_git_repository_and_clone_github.png)
 
 ## Create Dependent Environment 创建依赖环境
 
@@ -35,7 +35,7 @@ $ git push -u origin main
       $ python3 -m venv fastapi_env
       $ source ./fastapi/bin/activate
       ```
-      2. Conda (Anaconda or Miniconda)
+      - Conda (Anaconda or Miniconda)
          ```bash
          $ conda create -n fastapi_ven python=3.10
          $ conda activa fastapi_env
@@ -69,7 +69,7 @@ $ git push -u origin main
 
    - PyCharm
      编辑 Configurations
-     ![](./src/pycharm_add_variables.png)
+     ![](docs/images/pycharm_add_variables.png)
    - conda 虚拟环境
       ```bash
       (fastapi_env) $ conda env config vars set PG_DB=your_pg_db_name PG_HOST=your_pg_host PG_PASSWORD=your_pg_password PG_PORT=your_pg_port PG_USER=your_pg_user REDIS_DB=0 REDIS_HOST=localhost REDIS_PASSWORD=unicorn REDIS_PORT=6379 RUN_ENV=your_env_tag -n fastapi_env

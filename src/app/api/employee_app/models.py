@@ -1,7 +1,7 @@
 from tortoise import fields, Model
 
-from app.api.access_app.models import EmployeeGroups
-from app.models import Users
+from src.app.api.access_app.models import EmployeeGroups
+from src.app.models import Users
 
 
 class Departments(Model):

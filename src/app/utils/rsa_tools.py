@@ -4,7 +4,7 @@ from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import serialization, hashes
 from cryptography.hazmat.primitives.asymmetric import rsa, padding
 
-from app.core.config import settings
+from src.app.core.config import settings
 
 
 def create_rsa_private_public_key(key_size: int = 0) -> (str, str):

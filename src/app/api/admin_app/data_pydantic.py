@@ -2,7 +2,7 @@ from typing import List
 
 from pydantic import BaseModel
 
-from app.api.employee_app.data_pydantic import BaseEmployeeItem
+from src.app.api.employee_app.data_pydantic import BaseEmployeeItem
 
 
 class AdministratorItem(BaseModel):

@@ -3,13 +3,13 @@ from starlette.middleware.cors import CORSMiddleware
 from starlette.requests import Request
 from tortoise import Tortoise
 
-from app.api.admin_app.views import admin_routers
-from app.api.employee_app.views import employee_routers
-from app.api.reader_app.views import reader_routers
-from app.core.config import init_db, do_stuff, settings
-from app.utils.middlewares.jwt_middleware import JWTMiddleware
-from app.utils.middlewares.signature_middleware import SignatureMiddleware
-from app.utils.redis_tools import DatabasePool
+from src.app.api.admin_app.views import admin_routers
+from src.app.api.employee_app.views import employee_routers
+from src.app.api.reader_app.views import reader_routers
+from src.app.core.config import init_db, do_stuff, settings
+from src.app.utils.middlewares.jwt_middleware import JWTMiddleware
+from src.app.utils.middlewares.signature_middleware import SignatureMiddleware
+from src.app.utils.redis_tools import DatabasePool
 
 app = FastAPI()
 

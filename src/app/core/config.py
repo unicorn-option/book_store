@@ -47,11 +47,11 @@ class Settings:
         "apps": {
             "models": {
                 "models": [
-                    # 'app.models',
-                    'app.api.reader_app.models',
-                    'app.api.employee_app.models',
-                    'app.api.admin_app.models',
-                    'app.api.access_app.models',
+                    'src.app.models',
+                    'src.app.api.reader_app.models',
+                    'src.app.api.employee_app.models',
+                    'src.app.api.admin_app.models',
+                    'src.app.api.access_app.models',
                     'aerich.models',
                 ],
                 "default_connection": "default",
@@ -61,8 +61,8 @@ class Settings:
 
     REDIS_CONFIG = {
         'db_name': 'book_store',
-        'address': (os.environ.get('REDIS_HOST', 'localhost'), os.environ.get('REDIS_PORT', 6379)),
-        'db': os.environ.get('REDIS_DB', 0),
+        'address': (os.environ.get('REDIS_HOST', 'localhost'), int(os.environ.get('REDIS_PORT', 6379))),
+        'db': int(os.environ.get('REDIS_DB', 0)),
         'password': os.environ.get('REDIS_PASSWORD', 'unicorn'),
         'minsize': 1,
         'maxsize': 10,

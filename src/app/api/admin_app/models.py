@@ -1,6 +1,6 @@
 from tortoise import fields
 
-from app.models import Users
+from src.app.models import Users
 
 
 class Administrator(Users):

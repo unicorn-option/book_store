@@ -5,7 +5,7 @@ from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.requests import Request
 from starlette.responses import Response, JSONResponse
 
-from app.utils.signature import verify_signature
+from src.app.utils.signature import verify_signature
 
 
 class SignatureMiddleware(BaseHTTPMiddleware):

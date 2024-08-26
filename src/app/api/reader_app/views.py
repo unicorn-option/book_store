@@ -4,10 +4,10 @@ from fastapi import APIRouter
 from starlette import status
 from starlette.exceptions import HTTPException
 
-from app.api.reader_app.data_pydantic import ReaderItem
-from app.api.reader_app.models import Readers
-from app.core.config import settings
-from app.utils.auth import create_access_token
+from src.app.api.reader_app.data_pydantic import ReaderItem
+from src.app.api.reader_app.models import Readers
+from src.app.core.config import settings
+from src.app.utils.auth import create_access_token
 
 reader_routers = APIRouter()
 

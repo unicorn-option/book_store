@@ -2,7 +2,7 @@ import hashlib
 import hmac
 from typing import Dict
 
-from app.core.config import settings
+from src.app.core.config import settings
 
 
 def generate_signature(params: Dict[str, str]) -> str:
