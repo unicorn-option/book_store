@@ -82,6 +82,8 @@ class Settings:
         '/employee/login',
     }
     TOKEN_EXCLUDE_PATHS = {
+        '/docs',
+        '/openapi.json',
         '/reader/register',
         '/reader/login',
         '/admin/register',
