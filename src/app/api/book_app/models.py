@@ -7,7 +7,7 @@ class Books(Model):
     id = fields.IntField(pk=True)
     book_name = fields.CharField(max_length=32, description='书名')
     author_id = fields.ManyToManyField(
-        model_name='models.Author',
+        model_name='models.Authors',
         related_name='book',
         through='book_author',
     )
@@ -27,11 +27,11 @@ class Books(Model):
     class Meta:
         table = 'book'
         unique_together = (
-            ('book_name', 'available')
+            ('book_name', 'bar_code')
         )
 
 
-class Author(Model):
+class Authors(Model):
     id = fields.IntField(pk=True)
     name = fields.CharField(max_length=32, description='作者')
     nationality = fields.CharField(max_length=16, description='国籍')
@@ -39,6 +39,7 @@ class Author(Model):
     create_time = fields.DatetimeField(auto_now_add=True, description='创建时间')
     update_time = fields.DatetimeField(auto_now=True, description='更新时间')
     is_delete = fields.BooleanField(default=False, description='是否已删除')
+    book = fields.ManyToManyRelation['Books']
 
     class Meta:
         table = 'author'
@@ -46,5 +47,13 @@ class Author(Model):
 
 class Category(Model):
     id = fields.IntField(pk=True)
-    category_name = fields.CharField(max_length=16, description='')
-    parent_id = fields.ForeignKeyField('models.Category', related_name='category', null=True)
+    category_name = fields.CharField(max_length=16, description='图书类别名')
+    parent_id = fields.ForeignKeyField(
+        model_name='models.Category',
+        related_name='sub_categories',
+        null=True,
+        on_delete=fields.SET_NULL,
+    )
+
+    class Meta:
+        table = 'category'
