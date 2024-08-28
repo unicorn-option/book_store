@@ -1,5 +1,7 @@
 from tortoise import Model, fields
 
+# 生成迁移文件后, 需要手动将 Category 的建表语句调整到 Books 的建表语句前面
+
 
 class Books(Model):
     id = fields.IntField(pk=True)
