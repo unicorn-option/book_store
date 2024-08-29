@@ -47,11 +47,12 @@ class Settings:
         "apps": {
             "models": {
                 "models": [
-                    'src.app.models',
+                    # 'src.app.models',
                     'src.app.api.reader_app.models',
                     'src.app.api.employee_app.models',
                     'src.app.api.admin_app.models',
                     'src.app.api.access_app.models',
+                    'src.app.api.book_app.models',
                     'aerich.models',
                 ],
                 "default_connection": "default",
