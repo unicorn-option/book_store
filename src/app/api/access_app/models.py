@@ -43,7 +43,7 @@ class ReaderGroups(Model):
         null=True,
         on_delete=fields.SET_NULL,
     )
-    reader_id: fields.ManyToManyRelation['Readers'] = fields.ManyToManyField(
+    reader_id: fields.ManyToManyRelation['Readers'] = fields.ManyToManyField(  # noqa: F821
         model_name='models.Readers',
         related_name='group',
         through='reader_reader_group_rel',
@@ -63,7 +63,7 @@ class EmployeeGroups(Model):
         null=True,
         on_delete=fields.SET_NULL,
     )
-    employee_id: fields.ManyToManyRelation['Employees'] = fields.ManyToManyField(
+    employee_id: fields.ManyToManyRelation['Employees'] = fields.ManyToManyField(  # noqa: F821
         model_name='models.Employees',
         related_name='group',
         through='employee_employee_group_rel',

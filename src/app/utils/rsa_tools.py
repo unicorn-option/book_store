@@ -1,13 +1,13 @@
 import base64
 
 from cryptography.hazmat.backends import default_backend
-from cryptography.hazmat.primitives import serialization, hashes
-from cryptography.hazmat.primitives.asymmetric import rsa, padding
+from cryptography.hazmat.primitives import hashes, serialization
+from cryptography.hazmat.primitives.asymmetric import padding, rsa
 
 from src.app.core.config import settings
 
 
-def create_rsa_private_public_key(key_size: int = 0) -> (str, str):
+def create_rsa_private_public_key(key_size: int = 0) -> tuple[str, str]:
     # 生成私钥
     private_key = rsa.generate_private_key(
         public_exponent=65537,
