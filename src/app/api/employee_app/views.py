@@ -5,8 +5,8 @@ from starlette import status
 from starlette.exceptions import HTTPException
 from tortoise.transactions import in_transaction
 
-from src.app.api.book_app.models import Books, Authors, Category
-from src.app.api.employee_app.data_pydantic import EmployeeItem, BooksItem
+from src.app.api.book_app.models import Authors, Books, Category
+from src.app.api.employee_app.data_pydantic import BooksItem, EmployeeItem
 from src.app.api.employee_app.models import Employees
 from src.app.core.config import settings
 from src.app.utils.auth import create_access_token
@@ -47,7 +47,7 @@ async def employee_login(item: EmployeeItem):
 async def add_book(items: BooksItem):
     """入库新书"""
     results = []
-    async with in_transaction() as connection:
+    async with in_transaction():
         books_to_create, author_to_create = [], []
         for item in items.book_data:
             book = await Books.filter(book_name=item.book_name, bar_code=item.bar_code).first()
@@ -64,7 +64,9 @@ async def add_book(items: BooksItem):
                 # 作者
                 author_item = item.author
                 # 获取已存在的作者
-                author_exist = await Authors.filter(name__in=[a_item.name for a_item in author_item])
+                author_exist = await Authors.filter(
+                    name__in=[a_item.name for a_item in author_item]
+                )
                 exist_author_name = [ae.name for ae in author_exist]
                 # 去除已存在的, 用不存在的数据创建 Authors 模型对象
                 author_create = [
@@ -85,12 +87,18 @@ async def add_book(items: BooksItem):
                 # 不存在责创建
                 if not category:
                     # 检查父级是否存在
-                    parent_category = await Category.filter(category_name=category_item.parent).first()
+                    parent_category = await Category.filter(
+                        category_name=category_item.parent
+                    ).first()
                     # category_item.parent 不为空, 且不存在, 则需要创建
                     if category_item.parent and not parent_category:
-                        parent_category = await Category.create(category_name=category_item.parent, parent_category=None)
+                        parent_category = await Category.create(
+                            category_name=category_item.parent, parent_category=None
+                        )
                         await parent_category.save()
-                    category = await Category.create(category_name=category_item.category_name, parent_id=parent_category)
+                    category = await Category.create(
+                        category_name=category_item.category_name, parent_id=parent_category
+                    )
                     await category.save()
 
                 # 创建书籍
@@ -105,7 +113,11 @@ async def add_book(items: BooksItem):
                     stock=item.stock,
                 )
 
-                books_to_create.append((book, author_exist, author_create,))
+                books_to_create.append((
+                    book,
+                    author_exist,
+                    author_create,
+                ))
 
                 code = 1
                 msg = f'书名「{item.book_name}」条码「{item.bar_code}」已添加'
@@ -121,7 +133,9 @@ async def add_book(items: BooksItem):
         if books_to_create:
             await Books.bulk_create([book for book, *_ in books_to_create])
 
-            created_books = await Books.filter(book_name__in=[book.book_name for book, *_ in books_to_create])
+            created_books = await Books.filter(
+                book_name__in=[book.book_name for book, *_ in books_to_create]
+            )
             book_map = {book.book_name: book for book in created_books}
 
             for book, author_exist, author_create in books_to_create:

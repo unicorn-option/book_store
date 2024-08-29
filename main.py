@@ -1,12 +1,11 @@
 from fastapi import FastAPI, routing
 from starlette.middleware.cors import CORSMiddleware
-from starlette.requests import Request
 from tortoise import Tortoise
 
 from src.app.api.admin_app.views import admin_routers
 from src.app.api.employee_app.views import employee_routers
 from src.app.api.reader_app.views import reader_routers
-from src.app.core.config import init_db, do_stuff, settings
+from src.app.core.config import do_stuff, init_db, settings
 from src.app.utils.middlewares.jwt_middleware import JWTMiddleware
 from src.app.utils.middlewares.signature_middleware import SignatureMiddleware
 from src.app.utils.redis_tools import DatabasePool
@@ -97,6 +96,7 @@ async def shutdown_event():
     # await app.state.database_pool.close_redis_pool('book_store')
     # 关闭所有连接
     await app.state.database_pool.close_all_redis_pool()
+
 
 if __name__ == '__main__':
     import uvicorn
