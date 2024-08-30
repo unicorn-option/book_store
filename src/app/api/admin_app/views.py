@@ -91,4 +91,3 @@ async def create_employee_account(items: EmployeesItem):
         }
 
     return {'data': results}
-

@@ -1,4 +1,43 @@
 [tool.aerich]
-tortoise_orm = "app.core.TORTOISE_ORM"
+tortoise_orm = "src.app.core.TORTOISE_ORM"
 location = "./migrations"
 src_folder = "./."
+
+[tool.ruff]
+# Set the maximum line length to 100.
+preview = true
+line-length = 100
+
+[tool.ruff.lint]
+extend-select = [
+    "I",    # isort
+]
+ select = [
+    "F",    # pyflake
+    "W",    # pycodestyle
+    "E",    # pycodestyle
+    # "D",    # pydocstyle
+]
+
+ignore = [
+    "D415",     # pydocstyle first line end with .!?
+    "D100",     # pydocstyle missing docstring in public module
+    "D102",     # pydocstyle missing docstring in public method
+    "D103",     # pydocstyle Missing docstring in public function
+    "E999",     # pyflakes f-string: unterminated string
+    "E501",     # pycodestyle line too long
+]
+
+[tool.ruff.lint.isort]
+# set import sort order
+# first is built-in, second is third-party, third is local
+no-lines-before = ["local-folder"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.format]
+# 处理单双引号的问题，开启预览设置
+# preview = true
+# Prefer single quotes over double quotes.
+quote-style = "preserve"

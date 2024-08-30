@@ -41,6 +41,6 @@ def create_totp_token(secret_key):
 
     # 动态截取生成 TOTP 令牌
     offset = hmac_hash[-1] & 0x0F
-    code = (struct.unpack('>I', hmac_hash[offset:offset+4])[0] & 0xFFFF_FFFF) % 1_000_000_000
+    code = (struct.unpack('>I', hmac_hash[offset : offset + 4])[0] & 0xFFFF_FFFF) % 1_000_000_000
 
     return base36_encode(code)
