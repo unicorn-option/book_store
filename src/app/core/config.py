@@ -62,11 +62,13 @@ class Settings:
 
     REDIS_CONFIG = {
         'db_name': 'book_store',
-        'address': (os.environ.get('REDIS_HOST', 'localhost'), int(os.environ.get('REDIS_PORT', 6379))),
+        'host': os.environ.get('REDIS_HOST', 'localhost'),
+        'port': int(os.environ.get('REDIS_PORT', 6379)),
         'db': int(os.environ.get('REDIS_DB', 0)),
         'password': os.environ.get('REDIS_PASSWORD', 'unicorn'),
-        'minsize': 1,
-        'maxsize': 10,
+        'socket_timeout': 180,
+        'retry_on_timeout': True,
+        'decode_responses': True,
     }
 
     CORS = {
