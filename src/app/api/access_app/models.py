@@ -1,7 +1,7 @@
 from tortoise import Model, fields
 
-# from app.api.employee_app.models import Employees
-# from app.api.reader_app.models import Readers
+# from src.app.api.employee_app.models import Employees
+# from src.app.api.reader_app.models import Readers
 
 
 class UserGroups(Model):

@@ -6,7 +6,7 @@ from starlette.exceptions import HTTPException
 from tortoise.transactions import in_transaction
 
 from src.app.api.book_app.models import Authors, Books, Category
-from src.app.api.employee_app.data_pydantic import BooksItem, EmployeeItem
+from src.app.api.employee_app.data_pydantic import AuthorsItem, BooksItem, EmployeeItem
 from src.app.api.employee_app.models import Employees
 from src.app.core.config import settings
 from src.app.utils.auth import create_access_token
@@ -140,5 +140,40 @@ async def add_book(items: BooksItem):
 
             for book, author_exist, author_create in books_to_create:
                 await book_map[book.book_name].author_id.add(*author_exist, *author_create)
+
+    return {'data': results}
+
+
+@employee_routers.post('/authors')
+async def add_author(items: AuthorsItem):
+    results = []
+    async with in_transaction():
+        author_to_create = []
+        for item in items.author_data:
+            author = await Authors.filter(name=item.name).first()
+            if author:
+                author.nationality = item.nationality
+                await author.save()
+
+                code = 2
+                msg = f'作者「{author.name}」已更新'
+            else:
+                author_to_create.append(Authors(
+                    name=item.name,
+                    nationality=item.nationality,
+                    gender=item.gender,
+                ))
+
+                code = 1
+                msg = f'作者「{item.name}」已添加'
+
+            results.append({
+                'code': code,
+                'msg': msg,
+            })
+
+        # 批量创建作者
+        if author_to_create:
+            await Authors.bulk_create(author_to_create)
 
     return {'data': results}

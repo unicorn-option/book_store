@@ -1,6 +1,6 @@
 import json
 
-from aioredis import create_redis_pool
+from aioredis import ConnectionPool, Redis
 
 
 class DatabasePool:
@@ -18,17 +18,20 @@ class DatabasePool:
     async def create_redis_pool(self, redis_config):
         redis_config = redis_config.copy()
         db_name = redis_config.pop('db_name', 'book_store')
+
+        # 创建连接池
         if not self.redis_db_dict.get(db_name):
-            self.redis_db_dict[db_name] = await create_redis_pool(**redis_config)
+            pool = ConnectionPool(**redis_config)
+            self.redis_db_dict[db_name] = await Redis(connection_pool=pool)
 
     async def close_redis_pool(self, db_name):
-        self.redis_db_dict[db_name].close()
-        await self.redis_db_dict[db_name].wait_closed()
+        redis_pool = self.redis_db_dict.get(db_name)
+        if redis_pool:
+            await redis_pool.close()
 
     async def close_all_redis_pool(self):
         for db_name, redis_pool in self.redis_db_dict.items():
-            redis_pool.close()
-            await redis_pool.wait_closed()
+            await redis_pool.close()
 
     async def store_routes_as_hashes(self, db_name, route_data):
         redis_client = self.redis_db_dict[db_name]
@@ -39,11 +42,11 @@ class DatabasePool:
         # for path, data in route_data.items():
         #     await redis_client.hmset('book_store_routes', path, json.dumps(data))
         # 2️⃣ 通过 hmset_dict 方法间接使用 HMSET 命令
-        await redis_client.hmset_dict(
+        await redis_client.hset(
             'book_store_routes',
-            {path: json.dumps(data) for path, data in route_data.items()})
+            mapping={path: json.dumps(data) for path, data in route_data.items()})
 
     async def get_all_routes_by_hashes(self, db_name):
         redis_client = self.redis_db_dict[db_name]
         routes = await redis_client.hgetall('book_store_routes')
-        return {name.decode('utf-8'): json.loads(data.decode('utf-8')) for name, data in routes.items()}
+        return {name: json.loads(data) for name, data in routes.items()}
