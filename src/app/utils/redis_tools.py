@@ -28,6 +28,7 @@ class DatabasePool:
         redis_pool = self.redis_db_dict.get(db_name)
         if redis_pool:
             await redis_pool.close()
+
     async def close_all_redis_pool(self):
         for db_name, redis_pool in self.redis_db_dict.items():
             await redis_pool.close()

@@ -2,7 +2,7 @@ from typing import List
 
 from pydantic import BaseModel
 
-from src.app.api.book_app.data_pydantic import BaseBookItem, AuthorItem
+from src.app.api.book_app.data_pydantic import AuthorItem, BaseBookItem
 
 
 class BaseEmployeeItem(BaseModel):
