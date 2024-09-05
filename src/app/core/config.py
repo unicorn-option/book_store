@@ -97,9 +97,17 @@ class Settings:
 
     # 程序配置
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+    # log 配置
     log_path = os.path.join(BASE_DIR, 'logs')           # 日志目录
     if not os.path.exists(log_path):
         os.mkdir(log_path)
+    log_level = 'INFO'                                  # 日志级别
+    log_rotation = '128 MB'                             # 日志文件大小
+    log_retention = '10 days'                           # 日志保留时间
+    log_enqueue = True                                  # 是否排队异步写入日志保证异步和进程安全
+    log_backtrace = True                                # 是否记录回溯信息
+    log_diagnose = False                                # 是否记录诊断信息
 
     # 保存文件路径配置
     if OS_USER == 'root':

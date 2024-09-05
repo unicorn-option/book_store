@@ -6,11 +6,15 @@ from src.app.api.admin_app.views import admin_routers
 from src.app.api.employee_app.views import employee_routers
 from src.app.api.reader_app.views import reader_routers
 from src.app.core.config import do_stuff, init_db, settings
+from src.app.utils.middlewares.access_middleware import AccessLoggerMiddleware
 from src.app.utils.middlewares.jwt_middleware import JWTMiddleware
 from src.app.utils.middlewares.signature_middleware import SignatureMiddleware
 from src.app.utils.redis_tools import DatabasePool
+from src.app.utils.setup_log import init_log
 
 app = FastAPI(**settings.FastAPI_SETTINGS)
+
+init_log()
 
 # 注册中间件
 app.add_middleware(
@@ -25,6 +29,7 @@ app.add_middleware(
     JWTMiddleware,
     exclude_paths=settings.TOKEN_EXCLUDE_PATHS,
 )
+app.add_middleware(AccessLoggerMiddleware)
 
 # 注册子应用路由
 app.include_router(router=reader_routers, prefix='/reader')
