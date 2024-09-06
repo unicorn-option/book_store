@@ -15,7 +15,7 @@ class Books(Model):
     # max_digits: 有理数(十进制数)最大位数 decimal_places: 小数尾数
     price = fields.DecimalField(max_digits=10, decimal_places=2, description='价格')
     discount = fields.FloatField(description='折扣')
-    category = fields.ForeignKeyField('models.Category', related_name='book', description='类别')
+    category = fields.ForeignKeyField('models.Category', related_name='book', null=True, description='类别')
     address = fields.CharField(max_length=32, description='位置')
     bar_code = fields.CharField(max_length=32, description='条码')
     stock = fields.IntField(description='存量')
