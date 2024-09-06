@@ -28,7 +28,14 @@ async def reader_register(item: ReaderItem):
         avatar=item.avatar,
     )
 
-    await reader.save()
+    try:
+        await reader.save()
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(e),
+            headers={'WWW-Authenticate': 'Bearer'}
+        )
 
     return {'msg': '注册成功'}
 
