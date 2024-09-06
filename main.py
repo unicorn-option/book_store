@@ -10,7 +10,7 @@ from src.app.utils.middlewares.jwt_middleware import JWTMiddleware
 from src.app.utils.middlewares.signature_middleware import SignatureMiddleware
 from src.app.utils.redis_tools import DatabasePool
 
-app = FastAPI()
+app = FastAPI(**settings.FastAPI_SETTINGS)
 
 # 注册中间件
 app.add_middleware(
