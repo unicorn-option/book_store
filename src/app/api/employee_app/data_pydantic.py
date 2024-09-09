@@ -2,7 +2,7 @@ from typing import List
 
 from pydantic import BaseModel
 
-from src.app.api.book_app.data_pydantic import AuthorItem, BaseBookItem
+from src.app.api.book_app.data_pydantic import AuthorItem, BaseBookItem, CategoryItem
 
 
 class BaseEmployeeItem(BaseModel):
@@ -20,3 +20,7 @@ class BooksItem(BaseModel):
 
 class AuthorsItem(BaseModel):
     author_data: List[AuthorItem]
+
+
+class CategoriesItem(BaseModel):
+    category_data: List[CategoryItem]

@@ -12,6 +12,7 @@ class Settings:
         "title": "生产",
         "description": "描述",
         "version": "0.0.1",
+        # "docs_url": "/api_docs",
     }
     sem = asyncio.Semaphore(30)         # 控制项目中 异步请求其他网址时的并发量
     retry = 30                          # 网络重访次数
@@ -123,6 +124,7 @@ class DevSettings(Settings):
         "title": "开发测试",
         "description": "描述",
         "version": "0.0.1",
+        # "docs_url": "/api_docs",
     }
     # 本地开发数据库 配置
     # DB = {
@@ -138,23 +140,24 @@ class DevSettings(Settings):
         "default": {
             "engine": "tortoise.backends.asyncpg",
             "credentials": {
-                "host": '127.0.0.1',
-                "port": 5432,
-                "user": 'postgres',
-                "password": 'unicorn',
-                "database": 'postgres',
-                'charset': 'utf8mb4',
+                "host": os.environ.get('PG_HOST', '127.0.0.1'),
+                "port": os.environ.get('PG_PORT', 5432),
+                "user": os.environ.get('PG_USER', 'postgres'),
+                "password": os.environ.get('PG_PASSWORD', 'unicorn'),
+                "database": os.environ.get('PG_DB', 'postgres'),
             }
         }
     }
 
     REDIS_CONFIG = {
         'db_name': 'book_store',
-        'address': ('localhost', 6379),
-        'db': 0,
-        'password': 'unicorn',
-        'minsize': 1,
-        'maxsize': 10,
+        'host': os.environ.get('REDIS_HOST', 'localhost'),
+        'port': int(os.environ.get('REDIS_PORT', 6379)),
+        'db': int(os.environ.get('REDIS_DB', 0)),
+        'password': os.environ.get('REDIS_PASSWORD', 'unicorn'),
+        'socket_timeout': 180,
+        'retry_on_timeout': True,
+        'decode_responses': True,
     }
 
     # 保存文件路径配置
